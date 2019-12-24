@@ -1,5 +1,5 @@
 import test from 'ava';
-import queryString from '..';
+import queryString from '../dist/queryString';
 
 test('stringify', t => {
 	t.is(queryString.stringify({foo: 'bar'}), 'foo=bar');
