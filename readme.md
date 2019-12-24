@@ -1,4 +1,4 @@
-# query-string [![Build Status](https://travis-ci.org/sindresorhus/query-string.svg?branch=master)](https://travis-ci.org/sindresorhus/query-string)
+# query-string [![Build Status](https://travis-ci.org/sindresorhus/query-string.svg?branch=master)](https://travis-ci.org/sindresorhus/query-string) [![CircleCI](https://circleci.com/gh/FlandreDaisuki/query-string/tree/rollup.svg?style=svg)](https://circleci.com/gh/FlandreDaisuki/query-string/tree/rollup)
 
 > Parse and stringify URL [query strings](https://en.wikipedia.org/wiki/Query_string)
 
