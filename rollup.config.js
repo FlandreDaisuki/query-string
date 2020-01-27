@@ -6,7 +6,7 @@ export default {
   output: {
     format: 'umd',
     exports: 'named',
-    file: 'dist/queryString.js',
+    file: 'dist/queryString.umd.js',
     name: 'queryString',
   },
   plugins: [resolve(), commonjs()]

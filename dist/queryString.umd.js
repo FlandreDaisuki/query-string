@@ -4,6 +4,10 @@
 	(global = global || self, factory(global.queryString = {}));
 }(this, (function (exports) { 'use strict';
 
+	function createCommonjsModule(fn, module) {
+		return module = { exports: {} }, fn(module, module.exports), module.exports;
+	}
+
 	var strictUriEncode = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
 
 	var token = '%[a-f0-9]{2}';
@@ -120,6 +124,11 @@
 			string.slice(separatorIndex + separator.length)
 		];
 	};
+
+	var queryString = createCommonjsModule(function (module, exports) {
+
+
+
 
 	function encoderForArrayFormat(options) {
 		switch (options.arrayFormat) {
@@ -248,7 +257,7 @@
 		return value;
 	}
 
-	function decode$1(value, options) {
+	function decode(value, options) {
 		if (options.decode) {
 			return decodeUriComponent(value);
 		}
@@ -277,6 +286,16 @@
 		}
 
 		return input;
+	}
+
+	function getHash(url) {
+		let hash = '';
+		const hashStart = url.indexOf('#');
+		if (hashStart !== -1) {
+			hash = url.slice(hashStart);
+		}
+
+		return hash;
 	}
 
 	function extract(input) {
@@ -328,8 +347,8 @@
 
 			// Missing `=` should be `null`:
 			// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-			value = value === undefined ? null : decode$1(value, options);
-			formatter(decode$1(key, options), value, ret);
+			value = value === undefined ? null : decode(value, options);
+			formatter(decode(key, options), value, ret);
 		}
 
 		for (const key of Object.keys(ret)) {
@@ -360,10 +379,10 @@
 		}, Object.create(null));
 	}
 
-	var extract_1 = extract;
-	var parse_1 = parse;
+	exports.extract = extract;
+	exports.parse = parse;
 
-	var stringify = (object, options) => {
+	exports.stringify = (object, options) => {
 		if (!object) {
 			return '';
 		}
@@ -412,25 +431,39 @@
 		}).filter(x => x.length > 0).join('&');
 	};
 
-	var parseUrl = (input, options) => {
+	exports.parseUrl = (input, options) => {
 		return {
 			url: removeHash(input).split('?')[0] || '',
 			query: parse(extract(input), options)
 		};
 	};
 
-	var queryString = {
-		extract: extract_1,
-		parse: parse_1,
-		stringify: stringify,
-		parseUrl: parseUrl
+	exports.stringifyUrl = (input, options) => {
+		const url = removeHash(input.url).split('?')[0] || '';
+		const queryFromUrl = exports.extract(input.url);
+		const parsedQueryFromUrl = exports.parse(queryFromUrl);
+		const hash = getHash(input.url);
+		const query = Object.assign(parsedQueryFromUrl, input.query);
+		let queryString = exports.stringify(query, options);
+		if (queryString) {
+			queryString = `?${queryString}`;
+		}
+
+		return `${url}${queryString}${hash}`;
 	};
+	});
+	var queryString_1 = queryString.extract;
+	var queryString_2 = queryString.parse;
+	var queryString_3 = queryString.stringify;
+	var queryString_4 = queryString.parseUrl;
+	var queryString_5 = queryString.stringifyUrl;
 
 	exports.default = queryString;
-	exports.extract = extract_1;
-	exports.parse = parse_1;
-	exports.parseUrl = parseUrl;
-	exports.stringify = stringify;
+	exports.extract = queryString_1;
+	exports.parse = queryString_2;
+	exports.parseUrl = queryString_4;
+	exports.stringify = queryString_3;
+	exports.stringifyUrl = queryString_5;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
