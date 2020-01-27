@@ -1,5 +1,5 @@
 import test from 'ava';
-import queryString from '../dist/queryString';
+import queryString from '../dist/queryString.umd';
 
 test('query strings starting with a `?`', t => {
 	t.deepEqual(queryString.parse('?foo=bar'), {foo: 'bar'});

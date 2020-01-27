@@ -1,5 +1,5 @@
 import test from 'ava';
-import queryString from '../dist/queryString';
+import queryString from '../dist/queryString.umd';
 
 test('handles strings with query string', t => {
 	t.deepEqual(queryString.parseUrl('https://foo.bar#top?foo=bar'), {url: 'https://foo.bar', query: {}});
